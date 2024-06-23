@@ -13,7 +13,8 @@ public class BookMapper {
                 .id(book.getId())
                 .title(book.getTitle())
                 .author(book.getAuthor())
-                .owner(book.getOwner().getFullname())
+                .status(book.getStatus().name())
+                .owner(book.getOwner() != null ? book.getOwner().getUsername() : null)
                 .build();
     }
 }

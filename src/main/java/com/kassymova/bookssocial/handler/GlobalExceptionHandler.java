@@ -1,6 +1,7 @@
 package com.kassymova.bookssocial.handler;
 
 
+import com.kassymova.bookssocial.exception.OperationNotPermittedException;
 import jakarta.mail.MessagingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,6 +92,18 @@ public class GlobalExceptionHandler {
                 .body(
                         ExceptionResponse.builder()
                                 .bussinessExceptionDescription("Internal error, contact the admin")
+                                .errorMessage(exception.getMessage())
+                                .build()
+                );
+    }
+
+    @ExceptionHandler(OperationNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleException(OperationNotPermittedException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ExceptionResponse
+                                .builder()
                                 .errorMessage(exception.getMessage())
                                 .build()
                 );
